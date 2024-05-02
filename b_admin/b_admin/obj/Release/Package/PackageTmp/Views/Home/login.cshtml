@@ -1,0 +1,96 @@
+﻿@{
+    if (Request.Cookies["enfinit@tryadmin"] != null)
+    {
+        if (Request.Cookies["enfinit@tryadmin"].Value != null)
+        {
+            Response.Redirect("~/Home/Index");
+        }
+    }
+
+}
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>login owner</title>
+    <link rel='stylesheet' href='https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css'>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link href="~/assets/css/styles.css" rel="stylesheet" />
+</head>   
+<body>
+    @Html.AntiForgeryToken()
+    <div class="container" id="login">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="login">
+
+                    <h1>ورود</h1>
+
+                    <!-- Loging form -->
+                    <div>
+                        <div class="form-group">
+                            <input type="number" class="form-control" id="pn" aria-describedby="emailHelp" placeholder="نام کاربری">
+
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="pas" placeholder="رمز عبور">
+                        </div>
+
+                        <div class="form-check">
+
+                            <label class="switch">
+                                <input type="checkbox">
+                                <span class="slider round"></span>
+                            </label>
+                            <label class="form-check-label" for="exampleCheck1">مرا بخاطر بسپار</label>
+
+
+
+                        </div>
+
+                        <br>
+                        <button class=" btn-block btn btn-primary" onclick="usersignin()">ورود</button>
+                    </div>
+                    <!-- End Loging form -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/assets/js/jquery.min.js"></script>
+
+    <script>
+        function usersignin() {
+            var pn = $("#pn").val();
+            var pas = $("#pas").val();
+
+            var token = $('input[name="__RequestVerificationToken"]').val();
+            $.post("/Home/user_login", { pn: pn, pas: pas, __RequestVerificationToken: token })
+
+                .done(function (res) {
+                    switch (res) {
+                        case 1: window.Location.href = "Index";
+                            break;
+                        case 2: swal("عملیات ناموفق", "کلمه عبور اشتباه است", "error");
+                            break;
+                        case 3: swal("عملیات ناموفق", " کاربر یافت نشد ", "error");
+                            break;
+
+                    }
+
+
+                })
+                .fail(function () {
+                    alert("خطا در برقراری ارتباط با سرور");
+                })
+                .always(function () {
+
+                });
+
+        }
+    </script>
+</body>
+</html>
+

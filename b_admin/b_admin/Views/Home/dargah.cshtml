@@ -1,0 +1,29 @@
+﻿
+@{
+    Layout = "~/Views/Shared/layout.cshtml";
+    ViewBag.Title = "درگاه پرداخت";
+}
+
+
+<div class="smsdiv">
+    <input id="send" type="text" placeholder="GatewaySend" />
+    <input id="result" type="text" placeholder="GatewayResult" />
+    <input id="pin" type="text" placeholder="pin" />
+    <input id="callback" type="text" placeholder="Redirect" />
+    <button class="btn btn-success" onclick="setdargah()">اعمال</button>
+</div>
+
+
+
+@section scripts{
+
+    <script>
+        function setdargah() {
+
+            var token = $('input[name="__RequestVerificationToken"]').val();
+           
+            $.post("/Home/setdargah", { send: $("#send").val(), result: $("#result").val(), pin: $("#pin").val(), callback: $("#callback").val(), __RequestVerificationToken: token })
+        }
+    </script>
+
+    }

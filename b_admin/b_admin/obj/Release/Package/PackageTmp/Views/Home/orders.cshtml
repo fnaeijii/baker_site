@@ -1,0 +1,213 @@
+﻿
+@{
+    Layout = "~/Views/Shared/layout.cshtml";
+    ViewBag.Title = "سفارشات";
+}
+
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">سفارشات </h3>
+
+                <div class="box-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                        <input type="text" name="table_search" class="form-control pull-right" placeholder="جستجو">
+
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+
+                    <thead>
+                        <tr>
+                            <th>شماره فاکتور</th>
+                            <th>مشتری</th>
+                            <th>تعداد</th>
+                            <th>زمان/توضیحات</th>
+                            <th>ارسال</th>
+                            <th>پرداخت</th>
+                            <th>حذف</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbl_order">
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+</div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <div class="modal-title"></div>
+            </div>
+            <div class="modal-body">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">بستن</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+@section scripts{
+
+    <script>
+        $(document).ready(function () {
+            $.post("/Home/getorders")
+                .done(function (res) {
+                    if (res.state) {
+                        $("#tbl_order").empty();
+
+                        for (var item in res.m) {
+
+                            $("#tbl_order").append(
+                                '<tr>' +
+                                '<td>' + res.m[item].factornumber + '</td>' +
+                                '<td >' + '<button id="eb_' + res.m[item].fkUserID + '" onclick="chgval(this.id)" class="btn btn-warning"> اطلاعات مشتری</button>' + '</td>' +
+                                '<td > ' + res.m[item].number + '</td > ' +
+                                '<td >' + res.m[item].time + '/' + res.m[item].dis + '</td>' +
+                                '<td > ' + res.m[item].send + '</td > ' +
+                                '<td > ' + res.m[item].pay + '</td > ' +
+                                '<td >' + '<button id="remove_' + res.m[item].pkID + '" onclick="remove(this.id)" class="btn btn-danger rv"> حذف سفارش</button>' + '</td>' +
+            
+                                '</tr>'
+
+
+                            );
+
+                        }
+                    }
+                    else {
+                        swal("عملیات ناموفق", res.m, "error");
+                    }
+
+                })
+                .fail(function () {
+
+                    swal("عملیات ناموفق", "خطا در برقراری ارتباط با سرور", "error");
+
+                })
+                .always(function () {
+
+                });
+
+
+               
+          
+
+
+
+        });
+        function remove(id) {
+            swal({
+                title: "هشدار",
+                text: "آیا برای پاک کردن این نوبت اطمینان دارید",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+
+                        var vid = id.split("_");
+                        var token = $('input[name="__RequestVerificationToken"]').val();
+                        $.post("/Home/removeorder", { vid: vid[1], __RequestVerificationToken: token })
+
+                            .done(function (res) {
+
+                                if (res) {
+                                    $("td:has(button)")
+                                    swal("نوبت حذف شد", {
+                                        icon: "success",
+                                    });
+                                    location.reload();
+                                }
+                            })
+
+                            .fail(function () {
+
+                                swal("عملیات ناموفق", {
+                                    icon: "error",
+                                });
+                            })
+
+                            .always(function () {
+
+                            });
+
+
+                    }
+
+
+                });
+        }
+        function chgval(id) {
+
+            var token = $('input[name="__RequestVerificationToken"]').val();
+
+            var a = id.split("_");
+
+
+
+
+            $.post("/Home/getU", { id: a[1], __RequestVerificationToken: token })
+
+                .done(function (res) {
+
+                    $(".modal-title").empty();
+                    $(".modal-title").append(
+
+                       '<h4>'+ res[0].Name + ' (' + res[0].Status + ')'+'</h4>'
+
+                    );
+
+
+
+                    $(".modal-body").empty();
+                    $(".modal-body").append(
+
+                        '<p>شماره تماس:' + res[0].Phone + '</p>' +
+                        '<p>آدرس:' + res[0].address + '</p>'
+
+
+                    );
+
+
+                    $("#myModal").modal("show");
+                })
+                .fail(function () {
+                    swal("خطا", "عدم برقراری ارتباط با سرور", "error");
+                });
+
+        }
+
+
+
+
+    </script>
+
+
+
+}
+
+

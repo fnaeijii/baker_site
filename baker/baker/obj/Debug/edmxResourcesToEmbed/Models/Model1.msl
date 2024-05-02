@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Naeiji1465_bakerModelStoreContainer" CdmEntityContainer="Bdata">
+    <EntitySetMapping Name="tbl_Comm">
+      <EntityTypeMapping TypeName="Naeiji1465_bakerModel.tbl_Comm">
+        <MappingFragment StoreEntitySet="tbl_Comm">
+          <ScalarProperty Name="Typee" ColumnName="Typee" />
+          <ScalarProperty Name="pkID" ColumnName="pkID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Valuee" ColumnName="Valuee" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_User">
+      <EntityTypeMapping TypeName="Naeiji1465_bakerModel.tbl_User">
+        <MappingFragment StoreEntitySet="tbl_User">
+          <ScalarProperty Name="inventory" ColumnName="inventory" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="pkID" ColumnName="pkID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_order">
+      <EntityTypeMapping TypeName="Naeiji1465_bakerModel.tbl_order">
+        <MappingFragment StoreEntitySet="tbl_order">
+          <ScalarProperty Name="pay" ColumnName="pay" />
+          <ScalarProperty Name="factornumber" ColumnName="factornumber" />
+          <ScalarProperty Name="trackingid" ColumnName="trackingid" />
+          <ScalarProperty Name="transid" ColumnName="transid" />
+          <ScalarProperty Name="send" ColumnName="send" />
+          <ScalarProperty Name="dis" ColumnName="dis" />
+          <ScalarProperty Name="time" ColumnName="time" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="fkUserID" ColumnName="fkUserID" />
+          <ScalarProperty Name="pkID" ColumnName="pkID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

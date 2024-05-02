@@ -1,0 +1,296 @@
+﻿@{
+    if (Request.Cookies["enfinit@try1"] != null)
+    {
+        if (Request.Cookies["enfinit@try1"].Value != null)
+        {
+            Response.Redirect("~/Home/user_account");
+        }
+    }
+
+}
+
+<!doctype html>
+<html lang="ar" >
+<head>
+    <title>Login baker</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="~/assets/css/style2.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/assets/css/custom.css" rel="stylesheet" />
+    <link href="~/assets/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/assets/css/styles3.css" rel="stylesheet" />
+    <link href="~/assets/css/open-iconic-bootstrap.min.css" rel="stylesheet" />
+   
+    
+
+</head>
+<body>
+
+
+
+    <div class="modal fade" id="modal_signup"  aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                
+                <div class="modal-body">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">
+                                <i class="fa fa-lock mr-1"></i>ثبت نام
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span>&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="modal_signup_firstname">*نام ونام خانوادگی</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-user"></i>
+                                            </span>
+                                            <input type="text" id="modal_signup_firstname" class="form-control" placeholder="نام و نام خانوادگی" required />
+                                          
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="modal_signup_lastname">*شماره تلفن</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-mobile-phone"></i>
+                                            </span>
+                                            <input type="number" id="modal_signup_lastname"  class="form-control " placeholder="شماره تلفن" required />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group formsend">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="modal_signup_password">رمز عبور*</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-unlock-alt"></i>
+                                    </span>
+                                    <input type="password" id="modal_signup_password"  class="form-control " placeholder="رمز عبور" required/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="modal_signup_confirm_password">تکرار رمز عبور</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-unlock-alt"></i>
+                                    </span>
+                                    <input type="password" id="modal_signup_confirm_password" class="form-control" placeholder="تکرار رمز عبور" required="" />
+                                    <div id="pass-v" class="validate text-danger" ></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">لغو</button>
+                            <button class="btn btn-primary"  onclick="usersignup()">ثبت نام</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center mb-5">
+                    <h2 class="heading-section">لطفا وارد حساب کاربری خود شوید</h2>
+                    <p>عضو نیستید؟</p>
+                    <!-- Toggle button to open Modal Signup Popup Form -->
+                    <a href="#modal_signup" class="btn btn-primary" data-toggle="modal" data-target="#modal_signup">ثبت نام</a>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-md-12 col-lg-10">
+                    <div class="wrap d-md-flex">
+                        <div class="img" style="background-image: url('@ViewBag.banerimg');">
+                        </div>
+                        <div class="login-wrap p-4 p-md-5">
+                            <div class="d-flex">
+                                <div class="w-100">
+                                    <h3 class="mb-4">ورود</h3>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label class="label" for="name">شماره تلفن</label>
+                                <input type="number" class="form-control" id="pn" placeholder="شماره تلفن" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="label" for="password">رمز عبور</label>
+                                <input type="password" class="form-control" id="pas" placeholder="رمز عبور" required>
+                            </div>
+
+                            <button class=" btn btn-primary rounded  px-3" onclick="usersignin()">ورود</button>
+
+                            <div class="form-group d-md-flex">
+                                <div class="w-50 text-left">
+                                    <label class="checkbox-wrap checkbox-primary mb-0">
+                                        بخاطر بسپار
+                                        <input type="checkbox" checked>
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <div class="w-50 text-md-right">
+                                    <a href="#">رمز خود را فراموش کردید؟</a>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+    <script src="~/assets/js/jquery-3.2.1.min.js"></script>
+
+    <script src="~/assets/js/bootstrap.min.js"></script>
+    <script src="~/assets/js/main2.js"></script>
+    <script src="~/assets/js/popper.js"></script>
+   
+    <script>
+        $(document).ready(function () {
+            $.post("/Home/checksend2")
+                .done(function (res) {
+                    if (res == "true") {
+                        $(".formsend").empty();
+
+                        $(".formsend").append(
+                            '<label >آدرس</label>' +
+                            '<div class="input-group">' +
+                            '<span class="input-group-addon">' +
+                            '<i class="fa fa-address-book"></i>' +
+                            '</span>' +
+                            '<input type="text" id="modal_signup_address" class="form-control" placeholder="آدرس" />' +
+                            '</div>'
+
+                        );
+                    }
+                })
+                .fail(function () {
+
+
+                })
+                .always(function () {
+
+                });
+
+
+        });
+        function usersignup() {
+
+            var token = $('input[name="__RequestVerificationToken"]').val();
+
+            var namee = $("#modal_signup_firstname").val();
+
+            var phone = $("#modal_signup_lastname").val();
+
+            var address = $("#modal_signup_address").val();
+
+            var pass = $("#modal_signup_password").val();
+
+            var pass2 = $("#modal_signup_confirm_password").val();
+
+          
+            $.post("/Home/user_signup", { namee: namee, phone: phone, address: address, pass: pass, pass2: pass2, __RequestVerificationToken: token })
+
+                .done(function (res) {
+                    switch (res) {
+                        case 1: {
+                            $("#modal_signup").modal("hide");
+                            swal("عملیات ناموفق", "کاربری با این شماره قبلا ثبت نام شده", "error");
+
+                        }
+                            break;
+                        case 2: {
+                            $("#modal_signup").modal("hide");
+                            swal("عملیات موفق", "ثبت نام شدید", "success");
+                            window.location.href = "user_account";
+                            location.reload();
+                        }
+                            break;
+                        case 0: $("#pass-v").html("تکرار رمز مطابقت ندارد");
+                            break;
+                        case 3: swal("عملیات ناموفق", "فیلد های ستاره دار را پر کنید", "error");
+                            break;
+                    }
+
+
+                })
+                .fail(function () {
+                    alert("خطا در برقراری ارتباط با سرور");
+                })
+                .always(function () {
+
+                });
+
+       
+        }
+     
+        function usersignin() {
+            var pn = $("#pn").val();
+            var pas = $("#pas").val();
+
+            var token = $('input[name="__RequestVerificationToken"]').val();
+            $.post("/Home/user_login", { pn: pn, pas: pas, __RequestVerificationToken: token })
+
+                .done(function (res) {
+                    switch (res) {
+                        case 1:
+                            {
+                                window.Location.href = "user_account";
+                                location.reload();
+                            }
+                            break;
+                        case 2: swal("عملیات ناموفق", "کلمه عبور اشتباه است", "error");
+                            break;
+                        case 3: swal("عملیات ناموفق", " کاربر یافت نشد لطفا ثبت نام کنید!", "error");
+                            break;
+
+                    }
+
+
+                })
+                .fail(function () {
+                    alert("خطا در برقراری ارتباط با سرور");
+                })
+                .always(function () {
+
+                });
+
+        }
+
+
+    </script>
+
+</body>
+</html>
+

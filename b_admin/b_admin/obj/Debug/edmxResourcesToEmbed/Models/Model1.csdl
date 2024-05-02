@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Naeiji1465_bakerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tbl_Comm">
+    <Key>
+      <PropertyRef Name="pkID" />
+    </Key>
+    <Property Name="pkID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Valuee" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Typee" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityContainer Name="Naeiji1465_baker" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tbl_Comm" EntityType="Self.tbl_Comm" />
+    <EntitySet Name="tbl_User" EntityType="Naeiji1465_bakerModel.tbl_User" />
+    <EntitySet Name="tbl_Owner" EntityType="Naeiji1465_bakerModel.tbl_Owner" />
+    <EntitySet Name="tbl_order" EntityType="Naeiji1465_bakerModel.tbl_order" />
+    <AssociationSet Name="FK_tbl_order_tbl_User" Association="Naeiji1465_bakerModel.FK_tbl_order_tbl_User">
+      <End Role="tbl_User" EntitySet="tbl_User" />
+      <End Role="tbl_order" EntitySet="tbl_order" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="tbl_User">
+    <Key>
+      <PropertyRef Name="pkID" />
+    </Key>
+    <Property Name="pkID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" Nullable="false" MaxLength="11" FixedLength="true" Unicode="true" />
+    <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="inventory" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tbl_order" Relationship="Naeiji1465_bakerModel.FK_tbl_order_tbl_User" FromRole="tbl_User" ToRole="tbl_order" />
+  </EntityType>
+  <EntityType Name="tbl_Owner">
+    <Key>
+      <PropertyRef Name="pkID" />
+    </Key>
+    <Property Name="pkID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="usename" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="GatewaySend" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="GatewayResult" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="pin" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="callback" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="tbl_order">
+    <Key>
+      <PropertyRef Name="pkID" />
+    </Key>
+    <Property Name="pkID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="fkUserID" Type="Int32" Nullable="false" />
+    <Property Name="number" Type="Int32" Nullable="false" />
+    <Property Name="price" Type="Int64" Nullable="false" />
+    <Property Name="time" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="dis" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="send" Type="Boolean" />
+    <Property Name="transid" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="trackingid" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="factornumber" Type="Int32" Nullable="false" />
+    <Property Name="pay" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="tbl_User" Relationship="Naeiji1465_bakerModel.FK_tbl_order_tbl_User" FromRole="tbl_order" ToRole="tbl_User" />
+  </EntityType>
+  <Association Name="FK_tbl_order_tbl_User">
+    <End Type="Naeiji1465_bakerModel.tbl_User" Role="tbl_User" Multiplicity="1" />
+    <End Type="Naeiji1465_bakerModel.tbl_order" Role="tbl_order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_User">
+        <PropertyRef Name="pkID" />
+      </Principal>
+      <Dependent Role="tbl_order">
+        <PropertyRef Name="fkUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
